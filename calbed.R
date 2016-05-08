@@ -3,7 +3,7 @@ load_bed<-function(bedfile)
 {
   
   #Reading all file and selecting the useful columns
-  uniques<-read.table(file=bedfile, fill=TRUE, stringsAsFactors=FALSE)
+  uniques<-read.table(file=bedfile, fill=TRUE, stringsAsFactors=FALSE,skip=1)
   uniques<-uniques[,c(1,2,3,4)]
 
   
@@ -401,7 +401,7 @@ find_bed_to_bed<-function(cmap,bed_matrix,bed_bin,bedfile,chr="chr4",st_cmap)
 
 
 #output the interaction that our bed interact with ourbed
-find_bed_to_bed_interaction<-function(cmap,bed_matrix,bed_bin,bedfile,chr="chr4",st_cmap,m_threshold=0)
+find_bed_to_bed_interaction2<-function(cmap,bed_matrix,bed_bin,bedfile,chr="chr4",st_cmap,m_threshold=0)
 {
   n=dim(cmap)[1]
   bed_count=0
@@ -783,7 +783,7 @@ load_all_wig<-function(wigfile)
 {
   
   #Reading all file and selecting the useful columns
-  uniques<-read.table(file=wigfile, fill=TRUE, stringsAsFactors=FALSE)
+  uniques<-read.table(file=wigfile, fill=TRUE, stringsAsFactors=FALSE,skip=1)
   uniques<-uniques[,c(1,2,3,4)]
   
   
@@ -881,4 +881,84 @@ dm3_bed_convert2<-function(bedfile,outbed)
   write.table(n_bed, file = outbed,quote = FALSE, sep = "\t",
               eol = "\n", na = "NA", dec = ".", row.names = FALSE,
               col.names = FALSE)
+}
+
+
+find_bed_to_bed_interaction<-function(cmap,bed_matrix,bed_bin,bedfile,chr="chr4",st_cmap,m_threshold=0)
+{
+  n=dim(cmap)[1]
+  bed_count=0
+  nm_count=0
+  all_count=0
+  cccc=0;
+  
+  ooo<-data.frame("bed_id1"=numeric(0),"chr_nm1"=character(0),"n_start1"=numeric(0),"n_end1"=numeric(0),"n_location1"=numeric(0),"bed_seq1"=character(0),"bed_id2"=numeric(0),"chr_nm2"=character(0),"n_start2"=numeric(0),"n_end2"=numeric(0),"n_location2"=numeric(0),"bed_seq2"=character(0),"read_count"=numeric(0),"bed_bin1"=numeric(0),"bed_bin2"=numeric(0),stringsAsFactors=FALSE)
+  
+  for(i in 1:(dim(bed_matrix)[1]-1))
+  {
+    jj=which(cmap[i,(i+1):(dim(bed_matrix)[1])]>m_threshold)
+    jjj=jj+i
+    if(bed_matrix[i]!=0)
+    {
+      jjjj=which(bed_matrix[jjj]!=0)
+      jjjjj=jjj[jjjj]
+      j_length=length(jjjjj)
+      if(j_length>=1)
+      {
+        for(k in 1:4)
+        {
+          m_all=which(bed_bin[,k]==i)
+          m_all_length=length(m_all)
+          if(m_all_length>0)
+          {
+            for(mn in 1:m_all_length)
+            {
+              m=m_all[mn]
+              if(bedfile[m,1]==chr)
+              {
+                for(hh in 1:j_length)
+                {
+                  mj=jjjjj[hh]
+                  for(kk in 1:4)
+                  {
+                    mm_all=which(bed_bin[,kk]==mj)
+                    mm_all_length=length(mm_all)
+                    if(mm_all_length>0)
+                    {
+                      for(mmn in 1:mm_all_length)
+                      {
+                        mm=mm_all[mmn]
+                        if(bedfile[mm,1]==chr)
+                        {
+                          cccc=cccc+1
+                          ooo[cccc,1]=m
+                          ooo[cccc,2]=bedfile[m,1]
+                          ooo[cccc,3]=bedfile[m,2]
+                          ooo[cccc,4]=bedfile[m,3]
+                          ooo[cccc,5]=k
+                          ooo[cccc,6]=bedfile[m,4]
+                          ooo[cccc,7]=mm
+                          ooo[cccc,8]=bedfile[mm,1]
+                          ooo[cccc,9]=bedfile[mm,2]
+                          ooo[cccc,10]=bedfile[mm,3]
+                          ooo[cccc,11]=kk
+                          ooo[cccc,12]=bedfile[mm,4]
+                          ooo[cccc,13]=st_cmap[i,mj]
+                          ooo[cccc,14]=i
+                          ooo[cccc,15]=mj
+                          #cccc=cccc+1 
+                          
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return (ooo)
 }
