@@ -213,7 +213,7 @@ if (1 %in% opt$stages)
     rrr=paste(resolution,"000",sep = "")
     print(rrr)
     all_bed_file=paste(genomeName,"/hic_results/matrix/",input_dir,"/raw/",rrr,"/",input_dir,"_",rrr,"_abs.bed",sep="")
-    if(iced_normalize==TRUE)
+    if((iced_normalize=="TRUE")&&(iced_normalize=="true"))
     {
       all_hic_file=paste(genomeName,"/hic_results/matrix/",input_dir,"/iced/",rrr,"/",input_dir,"_",rrr,"_iced.matrix",sep="")
       hic_path=paste(genomeName,"/hic_results/matrix/",input_dir,"/iced/",rrr,sep="")
@@ -258,7 +258,7 @@ if (1 %in% opt$stages)
       tmpfilename=paste(genomeName,"/",chrname,".matrix",sep="")
       write.table(chr_hic_data,tmpfilename,quote=FALSE,sep="\t",row.names=FALSE,col.names=FALSE)
       
-      if(outputpdf=="TRUE")
+      if((outputpdf=="TRUE")||(outputpdf=="true"))
       {
         pdf(paste(genomeName,"/",chrname,"_heatmap.pdf",sep=""))
         
@@ -339,7 +339,7 @@ if (2 %in% opt$stages)
           set.seed(1234)
           #pdf(paste(genomeName,"/",chrName,"_netplot.pdf",sep=""))
           
-          if(outputpdf=="TRUE")
+          if((outputpdf=="TRUE")||(outputpdf=="true"))
           {
             pdf(paste(genomeName,"/",chrName,"_netplot.pdf",sep=""),width = 8,height = 8)
             
@@ -485,7 +485,7 @@ if (2 %in% opt$stages)
         chrhmCmap=melt(chrCmap)
         print(paste("plot ",chrName,"bed picture",sep=""))
         
-        if(outputpdf=="TRUE")
+        if((outputpdf=="TRUE")||(outputpdf=="true"))
         {
           pdf(paste(genomeName,"/",chrName,"_bedplot.pdf",sep=""),width = 8,height = 8)
           
@@ -557,7 +557,7 @@ if (2 %in% opt$stages)
             chrBedMatrix=convert_bed_to_matrix(chrBed,resolution*1000,chrName,chrTotSize,bedWindow)
             chrBedToBedInter=find_bed_to_bed_interaction(chrCmap,chrBedMatrix,chrBedBin,chrBed,chrName,chrCmap)
             
-            if(netplot=="true")
+            if((netplot=="true")||(netplot=="TRUE"))
             {
               netgraph=data.frame("p1"=character(dim(chrBedToBedInter)[1]),"p2"=character(dim(chrBedToBedInter)[1]),"weight"=numeric(dim(chrBedToBedInter)[1]))
               netgraph[,1]=as.data.frame(paste(chrBedToBedInter[,2],":",chrBedToBedInter[,3],"-",chrBedToBedInter[,4],sep=""))
@@ -565,7 +565,7 @@ if (2 %in% opt$stages)
               netgraph[,3]=as.data.frame(chrBedToBedInter[,13])
               
               set.seed(1234)
-              if(outputpdf=="TRUE")
+              if((outputpdf=="TRUE")||(outputpdf=="true"))
               {
                 pdf(paste(genomeName,"/",chrName,"_netplot.pdf",sep=""),width = 8,height = 8)
                 
@@ -706,7 +706,7 @@ if (2 %in% opt$stages)
             }
             chrhmCmap=melt(chrCmap)
             print(paste("plot ",chrName,"bed picture",sep=""))
-            if(outputpdf=="TRUE")
+            if((outputpdf=="TRUE")||(outputpdf=="true"))
             {
               pdf(paste(genomeName,"/",chrName,"_bedplot.pdf",sep=""),width = 8,height = 8)
               
@@ -804,7 +804,7 @@ if (2 %in% opt$stages)
             
             chrBedToBedInter=find_bed_to_bed_interaction(chrCmap,chrBedMatrix,chrBedBin,chrBed,chrName,chrCmap)
             
-            if(netplot=="true")
+            if((netplot=="true")||(netplot=="TRUE"))
             {
               netgraph=data.frame("p1"=character(dim(chrBedToBedInter)[1]),"p2"=character(dim(chrBedToBedInter)[1]),"weight"=numeric(dim(chrBedToBedInter)[1]))
               netgraph[,1]=as.data.frame(paste(chrBedToBedInter[,2],":",(chrBedToBedInter[,3]+chrstart),"-",(chrBedToBedInter[,4]+chrstart),sep=""))
@@ -813,7 +813,7 @@ if (2 %in% opt$stages)
               
               set.seed(1234)
               
-              if(outputpdf=="TRUE")
+              if((outputpdf=="TRUE")||(outputpdf=="true"))
               {
                 pdf(paste(genomeName,"/",chrName,"_netplot.pdf",sep=""),width = 8,height = 8)
                 
@@ -957,7 +957,7 @@ if (2 %in% opt$stages)
             }
             chrhmCmap=melt(chrCmap)
             print(paste("plot ",chrName,"bed picture",sep=""))
-            if(outputpdf=="TRUE")
+            if((outputpdf=="TRUE")||(outputpdf=="true"))
             {
               pdf(paste(genomeName,"/",chrName,"_bedplot.pdf",sep=""),width = 8,height = 8)
               
@@ -1102,7 +1102,7 @@ if (3 %in% opt$stages)
         chrCircosDb=segAnglePo(genomeFrame, seg=chrName)
         seg.num<-length(unique(genomeFrame[,1]))
         colors<-rainbow(seg.num, alpha=0.5)
-        if(outputpdf=="TRUE")
+        if((outputpdf=="TRUE")||(outputpdf=="true"))
         {
           pdf(paste(genomeName,"/",chrName,"_circos.pdf",sep=""),width = 8,height = 8)
           
@@ -1294,7 +1294,7 @@ if (3 %in% opt$stages)
           seg.num<-length(unique(genomeFrame[,1]))
           colors<-rainbow(seg.num, alpha=0.5)
           
-          if(outputpdf=="TRUE")
+          if((outputpdf=="TRUE")||(outputpdf=="true"))
           {
             pdf(paste(genomeName,"/",chrName,"_circos.pdf",sep=""),width = 8,height = 8)
             
@@ -1504,7 +1504,7 @@ if (4 %in% opt$stages)
         if(wig_num>1)
         {
           bcl <- bootFlexclust(mydata, k=2:7, nboot=50, FUN=cclust, multicore=FALSE)
-          if(outputpdf=="TRUE")
+          if((outputpdf=="TRUE")||(outputpdf=="true"))
           {
             pdf(paste(genomeName,"/",chrName,"_cluster_k_density.pdf",sep=""),width = 8,height = 8)
             
@@ -1521,7 +1521,7 @@ if (4 %in% opt$stages)
         
         out.dist=dist(mydata,method=dist_method) #manhattan,euclidean,minkowski,chebyshev,mahalanobis,canberra
         out.hclust=hclust(out.dist,method=clust_method) #average,centroid,median,complete,single,ward.D,density
-        if(outputpdf=="TRUE")
+        if((outputpdf=="TRUE")||(outputpdf=="true"))
         {
           pdf(paste(genomeName,"/",chrName,"_cluster_tree.pdf",sep=""),width = 8,height = 8)
           
@@ -1741,7 +1741,7 @@ if (4 %in% opt$stages)
           clust_heatmap=rbind(clust_heatmap,clust_group[which(clust_group[,"cluster.id"]==ii),])
         }
         rownames(clust_heatmap)=NULL
-        if(outputpdf=="TRUE")
+        if((outputpdf=="TRUE")||(outputpdf=="true"))
         {
           pdf(paste(genomeName,"/",chrName,"_cluster_heatmap.pdf",sep=""),width = 8,height = 8)
           
@@ -2006,7 +2006,7 @@ if (4 %in% opt$stages)
           if(wig_num>1)
           {
             bcl <- bootFlexclust(mydata, k=2:7, nboot=50, FUN=cclust, multicore=FALSE)
-            if(outputpdf=="TRUE")
+            if((outputpdf=="TRUE")||(outputpdf=="true"))
             {
               pdf(paste(genomeName,"/",chrName,"_cluster_k_density.pdf",sep=""),width = 8,height = 8)
               
@@ -2022,7 +2022,7 @@ if (4 %in% opt$stages)
           
           out.dist=dist(mydata,method=dist_method) #manhattan,euclidean,minkowski,chebyshev,mahalanobis,canberra
           out.hclust=hclust(out.dist,method=clust_method) #average,centroid,median,complete,single,ward.D,density
-          if(outputpdf=="TRUE")
+          if((outputpdf=="TRUE")||(outputpdf=="true"))
           {
             pdf(paste(genomeName,"/",chrName,"_cluster_tree.pdf",sep=""),width = 8,height = 8)
             
@@ -2246,7 +2246,7 @@ if (4 %in% opt$stages)
             clust_heatmap=rbind(clust_heatmap,clust_group[which(clust_group[,"cluster.id"]==ii),])
           }
           rownames(clust_heatmap)=NULL
-          if(outputpdf=="TRUE")
+          if((outputpdf=="TRUE")||(outputpdf=="true"))
           {
             pdf(paste(genomeName,"/",chrName,"_cluster_heatmap.pdf",sep=""),width = 8,height = 8)
             
