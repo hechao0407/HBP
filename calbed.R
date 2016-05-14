@@ -884,7 +884,7 @@ dm3_bed_convert2<-function(bedfile,outbed)
 }
 
 
-find_bed_to_bed_interaction<-function(cmap,bed_matrix,bed_bin,bedfile,chr="chr4",st_cmap,m_threshold=0)
+find_bed_to_bed_interaction3<-function(cmap,bed_matrix,bed_bin,bedfile,chr="chr4",st_cmap,m_threshold=0)
 {
   n=dim(cmap)[1]
   bed_count=0
@@ -949,6 +949,80 @@ find_bed_to_bed_interaction<-function(cmap,bed_matrix,bed_bin,bedfile,chr="chr4"
                           #cccc=cccc+1 
                           
                         }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return (ooo)
+}
+
+find_bed_to_bed_interaction<-function(cmap,bed_matrix,bed_bin,bedfile,chr="chr4",st_cmap,m_threshold=0)
+{
+  n=dim(cmap)[1]
+  bed_count=0
+  nm_count=0
+  all_count=0
+  cccc=0;
+  
+  ooo<-data.frame("bed_id1"=numeric(0),"chr_nm1"=character(0),"n_start1"=numeric(0),"n_end1"=numeric(0),"n_location1"=numeric(0),"bed_seq1"=character(0),"bed_id2"=numeric(0),"chr_nm2"=character(0),"n_start2"=numeric(0),"n_end2"=numeric(0),"n_location2"=numeric(0),"bed_seq2"=character(0),"read_count"=numeric(0),"bed_bin1"=numeric(0),"bed_bin2"=numeric(0),stringsAsFactors=FALSE)
+  
+  ooo=lapply(rbind(1:(dim(bed_matrix)[1]-1)), find_bed_to_bed_interaction_solo,cmap=cmap,bed_matrix=bed_matrix,bed_bin=bed_bin,bedfile=bedfile,chr=chr,st_cmap=st_cmap,m_threshold=m_threshold)
+  final_ooo<-data.frame("bed_id1"=numeric(0),"chr_nm1"=character(0),"n_start1"=numeric(0),"n_end1"=numeric(0),"n_location1"=numeric(0),"bed_seq1"=character(0),"bed_id2"=numeric(0),"chr_nm2"=character(0),"n_start2"=numeric(0),"n_end2"=numeric(0),"n_location2"=numeric(0),"bed_seq2"=character(0),"read_count"=numeric(0),"bed_bin1"=numeric(0),"bed_bin2"=numeric(0),stringsAsFactors=FALSE)
+  for(tt in 1:(dim(bed_matrix)[1]-1))
+  {
+    if(!is.null(ooo[tt][[1]]))
+    {
+      final_ooo=rbind(final_ooo,as.data.frame(ooo[tt][[1]]))
+    }
+  }
+  return (final_ooo)
+}
+find_bed_to_bed_interaction_solo<-function(i,cmap,bed_matrix,bed_bin,bedfile,chr="chr4",st_cmap,m_threshold=0)
+{
+  jj=which(cmap[i,(i+1):(dim(bed_matrix)[1])]>m_threshold)
+  jjj=jj+i
+  ooo=NULL
+  if(bed_matrix[i]!=0)
+  {
+    jjjj=which(bed_matrix[jjj]!=0)
+    jjjjj=jjj[jjjj]
+    j_length=length(jjjjj)
+    if(j_length>=1)
+    {
+      for(k in 1:4)
+      {
+        m_all=which(bed_bin[,k]==i)
+        m_all_length=length(m_all)
+        if(m_all_length>0)
+        {
+          for(mn in 1:m_all_length)
+          {
+            m=m_all[mn]
+            if(bedfile[m,1]==chr)
+            {
+              for(hh in 1:j_length)
+              {
+                mj=jjjjj[hh]
+                for(kk in 1:4)
+                {
+                  mm_all=which(bed_bin[,kk]==mj)
+                  mm_all_length=length(mm_all)
+                  if(mm_all_length>0)
+                  {
+                    for(mmn in 1:mm_all_length)
+                    {
+                      mm=mm_all[mmn]
+                      if(bedfile[mm,1]==chr)
+                      {
+                        ooo=rbind(ooo,cbind(m,bedfile[m,1],bedfile[m,2],bedfile[m,3],k,bedfile[m,4],mm,bedfile[mm,1],bedfile[mm,2],bedfile[mm,3],kk,bedfile[mm,4],st_cmap[i,mj],i,mj))
+                        
                       }
                     }
                   }
