@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "##exportPattern(\"^[[:alpha:]]+\")\n##Package used in HBP\nimport(\"optparse\")\nimport(\"grid\")\nimport(\"lattice\")\nimport(\"IDPmisc\")\nimport(\"OmicCircos\")\nimport(\"stringr\")\nimport(\"ggplot2\")\nimport(\"igraph\")\nimport(\"reshape2\")\nimport(\"pgirmess\")\nimport(\"coin\")\nimport(\"multcomp\")\nimport(\"flexclust\")\nimport(\"HiTC\")\nimport(\"rtracklayer\")\nimport(\"gplots\")\n\n##Export functions and generics\nexport(\"generate_enzyme_file\",\"run_hicpro\",\"generate_matrix\",\"if_distribution_analysis\",\"network_analysis\",\"circos_plot\",\"statistical_analysis\")\n",
+    "created" : 1466499560012.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3322340199",
+    "id" : "246FB980",
+    "lastKnownWriteTime" : 1467617876,
+    "last_content_update" : 1467617876522,
+    "path" : "G:/R/HBP_package/new/HBP/NAMESPACE",
+    "project_path" : "NAMESPACE",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_namespace"
+}

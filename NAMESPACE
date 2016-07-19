@@ -1,0 +1,21 @@
+##exportPattern("^[[:alpha:]]+")
+##Package used in HBP
+import("optparse")
+import("grid")
+import("lattice")
+import("IDPmisc")
+import("OmicCircos")
+import("stringr")
+import("ggplot2")
+import("igraph")
+import("reshape2")
+import("pgirmess")
+import("coin")
+import("multcomp")
+import("flexclust")
+import("HiTC")
+import("rtracklayer")
+import("gplots")
+
+##Export functions and generics
+export("generate_enzyme_file","run_hicpro","generate_matrix","if_distribution_analysis","network_analysis","circos_plot","statistical_analysis")
