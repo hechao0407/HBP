@@ -7,7 +7,7 @@ Hi-C Analysis Software
 Citation
 ========
 
-HBP: an optimized and flexible pipeline for the interaction analysis with the Hi-C datasets
+HBP: an optimized and flexible pipeline for the interaction analysis with the Hi-C datasets.
 Chao He.  Accepted. 
 
 
@@ -65,7 +65,7 @@ Usage of HBP
 ==============
 
 
-Example for regular interactions calling
+Example for interaction analysis from raw dataset
 :: 
 
  generate_enzyme_file(enzyme="DpnII",enzymesite="GATC",chrom_file="chrom_dm3.sizes",enzymedir="annotation",enzymeoverhangs5=0,genomeName="dm3",resolution=1)
