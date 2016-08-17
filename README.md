@@ -31,6 +31,7 @@ HBP Installation
  m) flexclust
  n) HiTC
  o) rtracklayer
+ p) gplots
 
 
 They can be installed through bioconductor. For example to install the package 'OmicCircos' open R and type the following
@@ -38,7 +39,7 @@ They can be installed through bioconductor. For example to install the package '
 ::
 
   source("http://www.bioconductor.org/biocLite.R")
-　biocLite("OmicCircos")
+　biocLite(c("optparse","IDPmisc","OmicCircos","stringr","ggplot2","igraph","reshape2","pgirmess","coin","multcomp","flexclust","HiTC","rtracklayer","gplots"))
 
 
 2. HBP depends on the following software pacakges which should be installed and included in the system PATH prior to using HBP.
@@ -48,197 +49,38 @@ They can be installed through bioconductor. For example to install the package '
  c) HiC-Pro     (http://github.com/nservant/HiC-Pro)
  d) Python(>2.7) with *pysam*, *bx*, *numpy*, and *scipy* libraries
 
-3. Once dependencies are installed HBP can be used from the command line using the following command.
+3. Once dependencies are installed HBP can be installed from the command line using the following command.
 
 ::
 
-  Rscript HBP.R --stages 1:4
+  R CMD INSTALL HBP_0.1.0.tar.gz
 
 Features
 ========
 
-HBP uses a Hi-C raw dataset or an interaction matrix file, a BED format file containing specific sites information, and some tracks files containing histone modification or motif enrichment level information (which can be downloaded from the UCSC or made by the user’s own files) as input files. Users can get a network graph, and get a list of name, degree, closeness, betweenness, local cluster coefficient, eigenvector centrality, and other information of the network node. HBP will also plot a scatter diagram to point out the location of specific sites. And then make a circos picture with tracks, make clusters according to the tracks or according to the topological structure and do a statistical analysis.
+The implemented pipeline HBP (Hi-C BED file analysis Pipeline) integrates existing pipelines focusing on individual steps of Hi-C data processing into an all-in-one package with adjustable parameters to infer the consensus 3D structure of genome from raw Hi-C sequencing data. What’s more, HBP could assign statistical confidence estimation for chromatin interactions, and clustering interaction loci according to enrichment tracks or topological structure automatically.
 
 
 Usage of HBP
 ==============
 
-::
-
-  Rscript HBP.R [--options]
 
 Example for regular interactions calling
 :: 
 
- Rscript HBP.R --inFastqDir fastq --bedFile dm3_CP190_int.bed --wigFile dm3_BEAF.wig --wigFile2 dm3_CTCF.wig --wigFile3 dm3_suHw.wig --stages 1:4 --genome_db /data2/my/dm3/ --genomeName dm3 --bowtiePath /usr/bin/bowtie2 --bowtieIndex /data2/my/bowtie2_index/dm3 --enzyme DpnII  
-
-
-
-Parameters
-----------
-
-
-ALL STAGES
-~~~~~~~~~~
-
-
-``stages``
- stages of the pipeline to execute.  stage can be either a single stage (e.g 1 or a range of stagnes e.g 1:4). default = 1:4
-
-``tmpDir``
- this will contain up to 3X the size of the largest input .sra file
+ generate_enzyme_file(enzyme="DpnII",enzymesite="GATC",chrom_file="chrom_dm3.sizes",enzymedir="annotation",enzymeoverhangs5=0,genomeName="dm3",resolution=1)
  
-``genomeName``
- The name of genome
+ run_hicpro(hicpro_path="HiC-Pro",inputfile="rawdata",configfile="config-hicpro.txt",outdir="dm3")
  
-``outputpdf``
- output pdf format, if choose false, it will output jpeg format. Default = FALSE
-
-``chrom``
- the chrom to invertigate. default = all
+ generate_matrix(all_hic_file="SRR389764_1000_iced.matrix",all_bed_file="SRR389764_1000_abs.bed",outputpdf="FALSE",matrix_dir="dm3",resolution=1,chrom_file="chrom_dm3.sizes")
  
-``chrstart``
- the chrom location to start. default = 0
-
-``chrend``
- the chrom location to end. default = 0
-
-``resolution``
- Hi-C heatmap resolution. default=100(kb)
-
-
-STAGE 1 PARAMETERS
-~~~~~~~~~~
-
-``input_dir``
- fastq or fastq.gz input dir
-
-``enzymesite``
- Restriction Enzyme sites
-
-``enzymeoverhangs5``
- restriction enzyme overhangs 5'
-
-``hicpro_config``
- hic_pro config file
-
-``hicpro_path``
- the path of HiC-Pro
+ if_distribution_analysis(all_hic_file="SRR1658648_50000_iced.matrix",all_bed_file="SRR1658648_50000_abs.bed",bedFile="L1_human_only.bed",matrix_dir="L1_GM12878",resolution=50,chrom_file="chrom_hg19.sizes")
  
-``iced_normalize``
- when set true, the matrix will be normalized by the iced algorithm. default = TRUE
+ network_analysis(bedFile="CTCF_hg19_encodeCluster_GM12878.bed",matrix_dir="CTCF_GM12878",chrom="chr1",chrstart=145000000,chrend=150000000,resolution=50)
  
-``enzyme``
- Restriction Enzyme Name
+ circos_plot(bedFile="CTCF_hg19_encodeCluster_GM12878.bed",wig_dir="wig",matrix_dir="CTCF_GM12878",chrom="chr8",chrstart=69300000,chrend=74300000,resolution=50)
  
-
-STAGE 2 PARAMETERS
-~~~~~~~~~~
-
-``bedFile``
- the path of the specific sites file( BED format)
+ statistical_analysis(bedFile="CTCF_hg19_encodeCluster_GM12878.bed",wig_dir="wig",matrix_dir="CTCF_GM12878",chrom="chr8",chrstart=69300000,chrend=74300000,resolution=50)
  
-``bedWindow``
- the window of the peak. default = 0
  
-``netthreshold``
- the threshold to identify an interaction. default = 0
- 
-``netplot``
- draw the network plot,when node number is too much,it may be not working. default = TRUE
- 
-``NetClusterType``
- the method of topological clustering, can be choose from NULL,multileve,edgeBetweenness,walktrap,labelPropagation. default = multileve
- 
-``NetVertexSize``
- network vertex size. default = 2
- 
-``NetVertexChangeSize``
- the parameter to change the node vertex, can be choose from NULL,degree,closeness,betweenness,Local_cluster_coefficient,Eigenvector_centrality. default = degree
- 
-``NetVertexLableDist``
- distance between label and vertex in the network. default = 0.1
- 
-``NetVertexColor``
- the color of vertex. default = red
- 
-``NetVertexLabelCex``
- the size of network vertex label. default = 0.3
-
-
-STAGE 3 PARAMETERS
-~~~~~~~~~~
-
-``wigFile``
- the path of track file
-
-``wigFile2``
- the path of track file2
-
-``wigFile3``
- the path of track file3
-
-``circosHmSize``
- track file heatmap line size. default = 0.1
-
-``circosThreshold``
- the threshold to identify an interaction. default = 0
- 
-``circosCmpSize``
-comparision sites line size. default = 5
- 
-``circosLineWidth``
- circos line width. default = 0.01
- 
-``circosLinecolor``
- circos line color, if choose rainbow will use random color. default = rainbow
-
-
-STAGE 4 PARAMETERS
-~~~~~~~~~~
-
-``groupNum``
- the random group number to determine the statistical difference. default = 100
-
-``dist_method``
- the method to calculater the statistical distance, can be chosen from manhattan,euclidean,minkowski,chebyshev,mahalanobis,canberra. default = euclidean
-
-``clust_method``
- the method to make tracks enrichment clusters , can be chosen from average,centroid,median,complete,single,ward.D. default = complete
-    
-``clust_k``
- the cluster number to make. default = 4
-
-``clust_label``
- add labels at the cluster tree picture or not. default = FALSE
-    
-``threshold``
- analysis threshold. default = 0
-    
-
-Output Files
-============
-
-``chr*.matrix``
-
-the matrix file of each chromosome
-
-``chr*_network.csv``
-
-this file contains the network information of each node. such as node location infromation, degree and so on. and if we make topological clusters, there will have the cluter information of each node.
-
-``chr*_cluster.csv``
-
-this file contains the tracks information of each node, and if we make tracks enrichment cluster, there will have the cluter information of each node.
-
-``chr*_*****.jpeg/pdf``
-
-the picture of different function. the details are in the supplement.
-
-
-
-
-
-
-
-
+Some parameters were set by default, users can learn them more in the help file
