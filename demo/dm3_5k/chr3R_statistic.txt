@@ -1,0 +1,130 @@
+Analysis start time: 2017-06-30 01:28:10
+
+
+
+the statistic test between BED WIG and  WIG : H3K27Ac.wig
+
+test name : Kruskal-Wallis rank sum test
+Kruskal-Wallis chi-squared : 268.296164336802
+Kruskal-Wallis df : 1
+Kruskal-Wallis p value : 2.66843781193143e-60
+
+test name : Multiple comparison test after Kruskal-Wallis
+significance level : 0.05
+observed difference  : 35068.587618753
+critical difference  : 4196.24314329602
+exist difference  : TRUE
+BED WIG mean  : 2.78868790152785
+ALL WIG mean  : -0.0390889994442726
+
+
+
+
+
+
+the statistic test between BED WIG and  WIG : H3K27Me3.wig
+
+test name : Kruskal-Wallis rank sum test
+Kruskal-Wallis chi-squared : 14.3627647863858
+Kruskal-Wallis df : 1
+Kruskal-Wallis p value : 0.00015075415381872
+
+test name : Multiple comparison test after Kruskal-Wallis
+significance level : 0.05
+observed difference  : 8113.8821987815
+critical difference  : 4196.22821793762
+exist difference  : TRUE
+BED WIG mean  : 0.225210384441894
+ALL WIG mean  : 1.07095839976584
+
+
+
+
+
+
+the statistic test between BED WIG and  WIG : H3K4Me1.wig
+
+test name : Kruskal-Wallis rank sum test
+Kruskal-Wallis chi-squared : 71.3284605332017
+Kruskal-Wallis df : 1
+Kruskal-Wallis p value : 3.02441602391984e-17
+
+test name : Multiple comparison test after Kruskal-Wallis
+significance level : 0.05
+observed difference  : 18081.6335037526
+critical difference  : 4196.19836722083
+exist difference  : TRUE
+BED WIG mean  : 4.07765652779347
+ALL WIG mean  : 1.28231624814666
+
+
+
+
+
+
+the statistic test between BED WIG and  WIG : H3K4Me3.wig
+
+test name : Kruskal-Wallis rank sum test
+Kruskal-Wallis chi-squared : 1.79526287358018
+Kruskal-Wallis df : 1
+Kruskal-Wallis p value : 0.180286247015187
+
+test name : Multiple comparison test after Kruskal-Wallis
+significance level : 0.05
+observed difference  : 2868.63316942216
+critical difference  : 4196.24314329602
+exist difference  : FALSE
+BED WIG mean  : 0.0835075996669933
+ALL WIG mean  : -0.165867096685973
+
+
+
+
+
+
+the statistic test between BED WIG and  WIG : H3K9Ac.wig
+
+test name : Kruskal-Wallis rank sum test
+Kruskal-Wallis chi-squared : 185.407997300615
+Kruskal-Wallis df : 1
+Kruskal-Wallis p value : 3.19690086037308e-42
+
+test name : Multiple comparison test after Kruskal-Wallis
+significance level : 0.05
+observed difference  : 28862.8851093109
+critical difference  : 4154.55662147267
+exist difference  : TRUE
+BED WIG mean  : 10.0613221214955
+ALL WIG mean  : 0.728251536376969
+
+
+
+
+
+
+the statistic test of interaction frequency between b2b and b2o :
+
+test name : Kruskal-Wallis rank sum test
+Kruskal-Wallis chi-squared : 54.8491753186891
+Kruskal-Wallis df : 1
+Kruskal-Wallis p value : 1.30143361988185e-13
+
+test name : Multiple comparison test after Kruskal-Wallis
+significance level : 0.05
+observed difference  : 225.141009183371
+critical difference  : 59.5876223277953
+exist difference  : TRUE
+b2b frequency mean  : 3.9976229934334
+b2o frequency mean  : 3.21413606390977
+
+
+
+
+the statistic test of interaction number between b2b and o2o :
+
+test name : t-test
+numbers of random group : 20
+95 percent confidence interval of random group : 1105.71572458046 ~ 1127.18427541954
+numbers of b2b : 1066
+t test p value : 6.85363741402223e-09
+exist difference  : TRUE
