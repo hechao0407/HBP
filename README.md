@@ -16,22 +16,20 @@ HBP Installation
 
 1. HBP depends on the following R packages.
 
- a) optparse
- b) grid
- c) lattice
- d) IDPmisc
- e) OmicCircos
- f) stringr
- g) ggplot2
- h) igraph
- i) reshape2
- j) pgirmess
- k) coin
- l) multcomp
- m) flexclust
- n) HiTC
- o) rtracklayer
- p) gplots
+ a) grid
+ b) lattice
+ c) OmicCircos
+ d) stringr
+ e) ggplot2
+ f) igraph
+ g) reshape2
+ h) pgirmess
+ i) coin
+ j) multcomp
+ k) flexclust
+ l) HiTC
+ m) rtracklayer
+ n) gplots
 
 
 They can be installed through bioconductor. For example to install the package 'OmicCircos' open R and type the following
@@ -49,11 +47,16 @@ They can be installed through bioconductor. For example to install the package '
  c) HiC-Pro     (http://github.com/nservant/HiC-Pro)
  d) Python(>2.7) with *pysam*, *bx*, *numpy*, and *scipy* libraries
 
-3. Once dependencies are installed HBP can be installed from the command line using the following command.
+3. HBP has already been upload to the CRAN, Once dependencies are installed it can be installed from the command line using the following command.
 
 ::
 
-  R CMD INSTALL HBP_0.1.0.tar.gz
+  install.packages("HBP")
+  
+  or install it by the package:
+  
+  R CMD INSTALL HBP_0.1.3.tar.gz
+  
 
 Features
 ========
